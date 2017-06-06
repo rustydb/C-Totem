@@ -4,7 +4,7 @@
 #endif
 
 #define STRIP_NEO_PIN 6
-#define ONBOARD_LED 7
+#define ONBOARD_LED_PIN 7
 #define ONBOARD_NEO_PIN 8
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(61, STRIP_NEO_PIN, NEO_GRB + NEO_KHZ800);
@@ -20,7 +20,7 @@ void setup() {
     strip.begin();
     strip.show();
     // Onboard LED.
-    pinMode(ONBOARD_LED, OUTPUT);
+    pinMode(ONBOARD_LED_PIN, OUTPUT);
 }
 
 void loop() {
@@ -42,7 +42,7 @@ void attachedNeoPixels() {
 }
 
 void onboardLED() {
-    digitalWrite(ONBOARD_LED, led_voltage);
+    digitalWrite(ONBOARD_LED_PIN, led_voltage);
     if (led_voltage == HIGH) {
         led_voltage = LOW;
     } else {
