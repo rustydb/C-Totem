@@ -7,7 +7,7 @@
 #define ONBOARD_LED 7
 #define ONBOARD_NEO_PIN 8
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(60, STRIP_NEO_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(61, STRIP_NEO_PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel onboard = Adafruit_NeoPixel(1, ONBOARD_NEO_PIN, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel currentPixel = Adafruit_NeoPixel();
 int led_voltage = HIGH;
