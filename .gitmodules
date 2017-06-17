@@ -1,0 +1,3 @@
+[submodule "encoder"]
+	path = libraries/encoder
+	url = git@gitlab.com-rustydb:rustydb/encoder.git
