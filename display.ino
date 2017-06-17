@@ -1,8 +1,8 @@
 /*
-    display.ino
+   display.ino
 
-    Visual oriented functions for a 'strip'.
-*/
+   Visual oriented functions for a 'strip'.
+ */
 
 // Fill the dots one after the other with a color.
 void colorWipe(uint32_t c, uint8_t wait) {

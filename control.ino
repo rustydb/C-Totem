@@ -1,8 +1,8 @@
 /*
-    control.ino
+   control.ino
 
-    Input oriented functions for a 'strip'.
-*/
+   Input oriented functions for a 'strip'.
+ */
 static char const* settingModes[] = {"Animations", "Speed", "Brightness"};
 static uint32_t settingColors[] = {0xff005f, 0x00ff00, 0xd75f00};
 
@@ -65,10 +65,10 @@ void readKnob() {
 // Applies the knob's currentEncoderValue to the strip.
 void applyKnob() {
     /* Legend:
-        0 - Change Pattern
-        1 - Set Speed
-        2 - Set Brightness
-    */
+       0 - Change Pattern
+       1 - Set Speed
+       2 - Set Brightness
+     */
     switch (settingMode) {
         case 0:
             changeAnimation();
@@ -89,68 +89,68 @@ void applyKnob() {
 // Changes the animation of the strip.
 void changeAnimation() {
     /* Legend:
-        0 - shift
-        1 - shift
-        2 - shift
-        3 - shift
-        4 - shift
-        5 - cycleSolid
-    */
-  switch (settingValue) {
-    case 0:
-//      fill_solid(&(infinity[0]), 60, CRGB::Black);
-//      meteorChaser(15, 12, 160, false);
-      break;
-    case 1:
-//      if (settingMode == 0) {
-//        fill_solid(&(infinity[0]), 60, CRGB::Black);
-//      }
-//      fourPoints(7, 21, 35, 49);
-      break;
-    case 2:
-//      colorCounter = random8();
-//      fillSolid(colorCounter);
-//      colorCounter = random8();
-//      meteorChaser(20, 14, 160, true);
-      break;
-    case 3:
-//      fillSolid(colorCounter);
-//      meteorChaser(30, 26, 160, true);
-      break;
-    case 4:
-//      wipeInfinity(25);
-      break;
-    case 5:
-//      fillSolid(colorCounter);
-      break;
-    default:
-      break;
-  }
-  previousEncoderValue = currentEncoderValue;
+       0 - shift
+       1 - shift
+       2 - shift
+       3 - shift
+       4 - shift
+       5 - cycleSolid
+     */
+    switch (settingValue) {
+        case 0:
+            //      fill_solid(&(infinity[0]), 60, CRGB::Black);
+            //      meteorChaser(15, 12, 160, false);
+            break;
+        case 1:
+            //      if (settingMode == 0) {
+            //        fill_solid(&(infinity[0]), 60, CRGB::Black);
+            //      }
+            //      fourPoints(7, 21, 35, 49);
+            break;
+        case 2:
+            //      colorCounter = random8();
+            //      fillSolid(colorCounter);
+            //      colorCounter = random8();
+            //      meteorChaser(20, 14, 160, true);
+            break;
+        case 3:
+            //      fillSolid(colorCounter);
+            //      meteorChaser(30, 26, 160, true);
+            break;
+        case 4:
+            //      wipeInfinity(25);
+            break;
+        case 5:
+            //      fillSolid(colorCounter);
+            break;
+        default:
+            break;
+    }
+    previousEncoderValue = currentEncoderValue;
 }
 
 // Sets the speed of the pattern from knob values.
 void setSpeed() {
     // Set a minimum and maximum.
-  if (currentEncoderValue > previousEncoderValue) {
-    if (speed > minimumSpeed) {
-        Serial.print("Slow down to ");
-        speed -= 2;
-        Serial.println(speed);
-    } else {
-        Serial.print("At minimum speed: ");
-        Serial.println(minimumSpeed);
+    if (currentEncoderValue > previousEncoderValue) {
+        if (speed > minimumSpeed) {
+            Serial.print("Slow down to ");
+            speed -= 2;
+            Serial.println(speed);
+        } else {
+            Serial.print("At minimum speed: ");
+            Serial.println(minimumSpeed);
+        }
+    } else if (currentEncoderValue < previousEncoderValue) {
+        if (speed < maximumSpeed) {
+            Serial.print("Speed up to ");
+            speed += 2;
+            Serial.println(speed);
+        } else {
+            Serial.print("At maximum speed: ");
+            Serial.println(maximumSpeed);
+        }
     }
-  } else if (currentEncoderValue < previousEncoderValue) {
-    if (speed < maximumSpeed) {
-        Serial.print("Speed up to ");
-        speed += 2;
-        Serial.println(speed);
-    } else {
-        Serial.print("At maximum speed: ");
-        Serial.println(maximumSpeed);
-    }
-  }
 }
 
 // Brightens or dims the strip from knob values.
