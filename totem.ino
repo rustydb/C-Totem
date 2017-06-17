@@ -1,4 +1,5 @@
 #include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
 #include "TimerOne.h"
 #include "ClickEncoder.h"
 
@@ -12,9 +13,11 @@
 
 // Global Constants.
 #define NUM_STRIP_LED 60
+#define NUM_STATE_LED 1
 
 // Devices.
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_STRIP_LED, PIN_NEO_STRIP, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel state = Adafruit_NeoPixel(NUM_STATE_LED, PIN_ONBD_NEO, NEO_GRB + NEO_KHZ800);
 ClickEncoder *knob;
 
 // Globals
@@ -33,6 +36,8 @@ void setup() {
     // Activate the NeoPixels.
     strip.begin();
     strip.show();
+    state.begin();
+    state.show();
     // Activate the encoder knob.
     knob = new ClickEncoder(PIN_KNOB_A, PIN_KNOB_B, PIN_KNOB_SWITCH, 4, false);
     Timer1.initialize(1000);
@@ -44,6 +49,6 @@ void setup() {
 }
 
 void loop() {
-    onboardLED(true);
     readKnob();
+    onboardLED(false);
 }

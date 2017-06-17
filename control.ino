@@ -4,6 +4,7 @@
     Input oriented functions for a 'strip'.
 */
 static char const* settingModes[] = {"Animations", "Speed", "Brightness"};
+static uint32_t settingColors[] = {0xff005f, 0x00ff00, 0xd75f00};
 
 // Update the mode.
 void updateMode() {
@@ -42,10 +43,11 @@ void readKnob() {
     if (b != ClickEncoder::Open) {
         switch (b) {
             case ClickEncoder::Clicked:
-                onboardLED(false);
                 updateMode();
                 break;
             case ClickEncoder::Released:
+                break;
+            case ClickEncoder::Held:
                 onboardLED(true);
                 break;
             default:
@@ -184,4 +186,9 @@ void timerISR() {
 void printSetting() {
     Serial.print("Configuring: ");
     Serial.println(settingModes[settingMode]);
+    for (uint16_t i = 0; i < state.numPixels(); i++) {
+        state.setPixelColor(i, settingColors[settingMode]);
+        state.setBrightness(10);
+        state.show();
+    }
 }
