@@ -3,7 +3,7 @@
 
    Input oriented functions for a 'strip'.
  */
-static char const* settingModes[] = {"Animations", "Speed", "Brightness"};
+static char const* settingModes[] = {"Pattern", "Speed", "Brightness"};
 static uint32_t settingColors[] = {0xff005f, 0x00ff00, 0xd75f00};
 
 // Update the mode.
@@ -46,6 +46,7 @@ void readKnob() {
                 updateMode();
                 break;
             case ClickEncoder::Released:
+                onboardLED(false);
                 break;
             case ClickEncoder::Held:
                 onboardLED(true);
@@ -60,6 +61,7 @@ void readKnob() {
             applyKnob();
         }
     }
+    FastLED.show();
 }
 
 // Applies the knob's currentEncoderValue to the strip.
@@ -98,6 +100,7 @@ void changeAnimation() {
      */
     switch (settingValue) {
         case 0:
+            wipeRainbow();
             //      fill_solid(&(infinity[0]), 60, CRGB::Black);
             //      meteorChaser(15, 12, 160, false);
             break;
@@ -155,6 +158,8 @@ void setSpeed() {
 
 // Brightens or dims the strip from knob values.
 void setBrightness() {
+    // TODO: Set red, green, and blue to equal brightness value.
+    // FIXME: Only works on 'right' turn but dims only, 'left' shuts it off.
     if (currentEncoderValue > previousEncoderValue) {
         if (brightness > 250) {
             Serial.print("At maximum brightness: ");
@@ -163,6 +168,9 @@ void setBrightness() {
             Serial.print("Brighten to ");
             brightness += 5;
             Serial.println(brightness);
+            for (uint16_t i = 0; i < NUM_STRIP_LED; i++) {
+                strip[i] %= (1 / brightness);
+            }
         }
     } else if (currentEncoderValue < previousEncoderValue) {
         if (brightness <= 0) {
@@ -172,9 +180,12 @@ void setBrightness() {
             Serial.print("Dim to ");
             brightness -= 5;
             Serial.println(brightness);
+            for (uint16_t i = 0; i < NUM_STRIP_LED; i++) {
+                strip[i] %= brightness;
+            }
         }
     }
-    strip.setBrightness(brightness);
+    FastLED.show();
 }
 
 // Interrupt for encoder knob.
@@ -186,9 +197,9 @@ void timerISR() {
 void printSetting() {
     Serial.print("Configuring: ");
     Serial.println(settingModes[settingMode]);
-    for (uint16_t i = 0; i < state.numPixels(); i++) {
-        state.setPixelColor(i, settingColors[settingMode]);
-        state.setBrightness(10);
-        state.show();
+    fill_solid(&(state[0]), NUM_STATE_LED, CRGB(settingColors[settingMode]));
+    for (uint16_t i = 0; i < NUM_STATE_LED; i++) {
+        state[i] %= 10;
     }
+    FastLED.show();
 }
