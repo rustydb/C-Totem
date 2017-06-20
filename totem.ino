@@ -44,6 +44,7 @@ void setup() {
     previousEncoderValue = 0;
     // General things.
     printSetting();
+    changeAnimation();
     Serial.println("Starting program..");
 }
 

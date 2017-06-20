@@ -158,8 +158,6 @@ void setSpeed() {
 
 // Brightens or dims the strip from knob values.
 void setBrightness() {
-    // TODO: Set red, green, and blue to equal brightness value.
-    // FIXME: Only works on 'right' turn but dims only, 'left' shuts it off.
     if (currentEncoderValue > previousEncoderValue) {
         if (brightness > 250) {
             Serial.print("At maximum brightness: ");
@@ -169,7 +167,8 @@ void setBrightness() {
             brightness += 5;
             Serial.println(brightness);
             for (uint16_t i = 0; i < NUM_STRIP_LED; i++) {
-                strip[i] %= (1 / brightness);
+                strip[i].addToRGB(5);
+//                strip[i] += 5;
             }
         }
     } else if (currentEncoderValue < previousEncoderValue) {
@@ -181,7 +180,8 @@ void setBrightness() {
             brightness -= 5;
             Serial.println(brightness);
             for (uint16_t i = 0; i < NUM_STRIP_LED; i++) {
-                strip[i] %= brightness;
+                strip[i].subtractFromRGB(5);
+//                strip[i] -= 5;
             }
         }
     }
@@ -199,7 +199,7 @@ void printSetting() {
     Serial.println(settingModes[settingMode]);
     fill_solid(&(state[0]), NUM_STATE_LED, CRGB(settingColors[settingMode]));
     for (uint16_t i = 0; i < NUM_STATE_LED; i++) {
-        state[i] %= 10;
+        state[i] %= 20;
     }
     FastLED.show();
 }

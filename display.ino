@@ -9,6 +9,31 @@ void wipeRainbow() {
     FastLED.show();
 }
 
+void meteorChaser(uint16_t meteorBodyPixel, uint8_t tailLength, uint16_t fadeValue, bool rainbowTail) {
+    int fadeSpectrum = fadeValue;
+    int fadeIncrement = (256 - fadeValue) / tailLength;
+
+    if (rainbowTail == true) {
+        fill_rainbow(&(strip[meteorBodyPixel]), tailLength, colorCounter);
+    } else {
+        if (direction == true) {
+            for (uint16_t i = meteorBodyPixel; i > (meteorBodyPixel - tailLength); i--) {
+                strip[i].setHue(colorCounter);
+                strip[i].fadeLightBy(fadeSpectrum);
+                fadeSpectrum += fadeIncrement;
+            }
+        } else {
+            for (uint16_t i = (meteorBodyPixel - tailLength); i < meteorBodyPixel; i++) {
+                strip[i].setHue(colorCounter);
+                strip[i].fadeLightBy(fadeSpectrum);
+                fadeSpectrum += fadeIncrement;
+            }
+        }
+    }
+    FastLED.show();
+}
+
+
 // Toggle the onboardLED.
 void onboardLED(bool lit) {
     if (lit == true) {
