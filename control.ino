@@ -101,8 +101,9 @@ void changeAnimation() {
     switch (settingValue) {
         case 0:
             wipeRainbow();
-            //      fill_solid(&(infinity[0]), 60, CRGB::Black);
-            //      meteorChaser(15, 12, 160, false);
+            /*meteorChaser(15, 90, 160, true);*/
+            /*shift();*/
+            FastLED.show();
             break;
         case 1:
             //      if (settingMode == 0) {
@@ -168,7 +169,7 @@ void setBrightness() {
             Serial.println(brightness);
             for (uint16_t i = 0; i < NUM_STRIP_LED; i++) {
                 strip[i].addToRGB(5);
-//                strip[i] += 5;
+                /*strip[i] += 5;*/
             }
         }
     } else if (currentEncoderValue < previousEncoderValue) {
@@ -181,7 +182,7 @@ void setBrightness() {
             Serial.println(brightness);
             for (uint16_t i = 0; i < NUM_STRIP_LED; i++) {
                 strip[i].subtractFromRGB(5);
-//                strip[i] -= 5;
+                /*strip[i] -= 5;*/
             }
         }
     }

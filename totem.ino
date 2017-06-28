@@ -12,7 +12,7 @@
 #define PIN_KNOB_SWITCH 12
 
 // Global Constants.
-#define NUM_STRIP_LED 60
+#define NUM_STRIP_LED 120
 #define NUM_STATE_LED 1
 
 // Devices.
@@ -28,6 +28,8 @@ uint8_t brightness, maximumBrightness = 255;
 uint8_t minimumBrightness = 0;
 uint16_t speed, maximumSpeed = 24;
 uint16_t minimumSpeed = 2;
+uint16_t colorCounter = 0;
+bool direction = true;
 
 void setup() {
     // Start broadcasting on the serial port for debugging.
